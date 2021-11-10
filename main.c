@@ -25,6 +25,17 @@ int main(void)
 	DelayMs(500);
 	
 	lcd16x2_clrscr();
+		GPIOB->BRR=GPIO_Pin_9;
+		DelayMs(200);
+		GPIOC->BRR=GPIO_Pin_13;
+		DelayMs(200);
+		GPIOB->BRR=GPIO_Pin_15;
+		DelayMs(200);
+		GPIOA->BRR=GPIO_Pin_8;
+		DelayMs(200);
+		
+		
+
 	
 	while(1)
 	{
