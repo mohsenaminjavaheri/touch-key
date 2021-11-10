@@ -44,6 +44,8 @@ int main(void)
 		GPIOA->BRR=GPIO_Pin_8;
 		DelayMs(200);
 		
+		
+		
 	}
 	
 	while(1)
