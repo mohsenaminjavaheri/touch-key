@@ -16,3 +16,7 @@
 .\objects\main.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\StdPeriph_Driver\inc\stm32f10x_i2c.h
 .\objects\main.o: delay.h
 .\objects\main.o: gpio.h
+<<<<<<< HEAD
+=======
+.\objects\main.o: lcd16_2.h
+>>>>>>> start

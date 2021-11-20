@@ -28,7 +28,11 @@
     <TargetOption>
       <CLKADS>12000000</CLKADS>
       <OPTTT>
+<<<<<<< HEAD
         <gFlags>0</gFlags>
+=======
+        <gFlags>1</gFlags>
+>>>>>>> start
         <BeepAtEnd>1</BeepAtEnd>
         <RunSim>0</RunSim>
         <RunTarget>1</RunTarget>
@@ -103,7 +107,11 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
+<<<<<<< HEAD
         <nTsel>0</nTsel>
+=======
+        <nTsel>6</nTsel>
+>>>>>>> start
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -114,11 +122,23 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
+<<<<<<< HEAD
         <pMon>BIN\UL2CM3.DLL</pMon>
+=======
+        <pMon>STLink\ST-LINKIII-KEIL_SWO.dll</pMon>
+>>>>>>> start
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+<<<<<<< HEAD
+=======
+          <Key>ST-LINKIII-KEIL_SWO</Key>
+          <Name>-U -O206 -SF4000 -C0 -A0 -I0 -HNlocalhost -HP7184 -P2 -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_128.FLM -FS08000000 -FL020000 -FP0($$Device:STM32F103C8$Flash\STM32F10x_128.FLM)</Name>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
+>>>>>>> start
           <Key>UL2CM3</Key>
           <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_128 -FS08000000 -FL020000 -FP0($$Device:STM32F103C8$Flash\STM32F10x_128.FLM))</Name>
         </SetRegEntry>
@@ -241,6 +261,33 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+<<<<<<< HEAD
+=======
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>6</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\LCD16_2.c</PathWithFileName>
+      <FilenameWithoutPath>LCD16_2.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>7</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\LCD16_2.h</PathWithFileName>
+      <FilenameWithoutPath>LCD16_2.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+>>>>>>> start
   </Group>
 
   <Group>

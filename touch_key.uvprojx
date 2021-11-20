@@ -406,6 +406,19 @@
               <FileType>5</FileType>
               <FilePath>.\GPIO.h</FilePath>
             </File>
+<<<<<<< HEAD
+=======
+            <File>
+              <FileName>LCD16_2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\LCD16_2.c</FilePath>
+            </File>
+            <File>
+              <FileName>LCD16_2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\LCD16_2.h</FilePath>
+            </File>
+>>>>>>> start
           </Files>
         </Group>
         <Group>
