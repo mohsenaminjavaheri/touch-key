@@ -24,12 +24,10 @@
 
 
 uint8_t Slider(uint32_t v_input);
-
 uint8_t Wheel(uint32_t v_input);
-
-uint8_t Hold(uint32_t v_input);
-
+uint8_t Hold(uint32_t v_input,uint8_t x, uint8_t y);
 void Password(uint8_t PASS_Length , char PASS[5] );
+void Menu (void);
 
 
 
