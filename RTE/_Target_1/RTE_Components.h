@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'test' 
+ * Project: 'touch_key' 
  * Target:  'Target 1' 
  */
 
