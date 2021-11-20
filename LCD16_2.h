@@ -142,7 +142,6 @@ void lcd16x2_putc(const char c);
 void lcd16x2_puts(const char* s);
 void lcd16x2_create_custom_char(uint8_t location, uint8_t* data_bytes);
 void lcd16x2_put_custom_char(uint8_t x, uint8_t y, uint8_t location);
-int lcd16x2_ShowDisplayShiftLeft(const char *s , uint16_t BufferSize , uint16_t Enable);
 
 #ifdef __cplusplus
 }

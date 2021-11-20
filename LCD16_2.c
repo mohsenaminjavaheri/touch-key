@@ -19,8 +19,6 @@ static uint8_t lcd16x2_wait_busy(void);
 static void lcd16x2_new_line(uint8_t pos);
 
 static uint8_t display_cursor_on_off_control;
-static char show[16];
-static int j;
 GPIO_InitTypeDef GPIO_InitStruct;
 
 /** Public functions -------------------------------------------------------- */
@@ -633,39 +631,4 @@ static void lcd16x2_new_line(uint8_t pos)
 #endif
 
 	lcd16x2_write_command(LCD16X2_SET_DDRAM_ADDRESS | address_counter);
-}
-
-int lcd16x2_ShowDisplayShiftLeft(const char *s , uint16_t BufferSize , uint16_t Enable)
-{
-	if(Enable == 1)
-	{
-				for(j=0 ; j<16 ; j++)
-				{
-					show[j] = s[j];
-					Enable=0;
-				}
-		
-	}
-	else
-	{			
-				for(int k =0;k<15;k++)
-				{
-					show[k]=show[k+1];
-				}
-
-				show[15]=s[j++];
-
-				if(j > BufferSize)
-				{
-					return 1;
-				}
-				
-	}
-				
-		lcd16x2_gotoxy(0,0);
-
-		lcd16x2_puts(show);
-	
-		DelayMs(300);
-	
 }
