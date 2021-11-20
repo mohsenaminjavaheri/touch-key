@@ -2,6 +2,7 @@
 ".\objects\main.o"
 ".\objects\delay.o"
 ".\objects\gpio.o"
+".\objects\lcd16_2.o"
 ".\objects\misc.o"
 ".\objects\stm32f10x_gpio.o"
 ".\objects\stm32f10x_rcc.o"
