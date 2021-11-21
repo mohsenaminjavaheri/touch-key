@@ -5,6 +5,7 @@
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_i2c.h"
+#include "stm32f10x_rtc.h"
 
 
 #include "delay.h"
@@ -14,6 +15,7 @@
 #include "mpr121_def.h"
 #include "EXTI-config.h"
 #include "touch.h"
+#include "RTC.h"
 
 
 uint16_t value;
@@ -105,6 +107,9 @@ int main(void)
 	
 	EXTI9_5_Init();
 	
+	RTC_config();
+
+	
 //	char password[3]={1,4,8};
 //	
 //	Password(3,password);
@@ -112,10 +117,11 @@ int main(void)
 	while(1)
 	{
 		
+		Time_Display(RTC_GetCounter());
 		
-		sprintf(str,"TS=%d          \nvol:%d ,Li=%d   ",value,volume1,light1);	
+		sprintf(str,"vol:%d  Li=%d  ",volume1,light1);	
 		
-		lcd16x2_gotoxy(0,0);
+		lcd16x2_gotoxy(0,1);
 			
 		lcd16x2_puts(str);
 		
