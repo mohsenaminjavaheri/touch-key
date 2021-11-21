@@ -52,6 +52,9 @@ uint16_t ip_3_3=1;
 uint16_t ip_4=1;
 uint16_t ip_4_4=1;
 
+uint8_t Num_ofMenu=0;
+uint8_t Num_ofSubMenu = 0;
+
 extern uint16_t volume;
 extern uint16_t volume1;
 extern uint16_t light;
@@ -565,5 +568,130 @@ void Menu (void)
 }
 
 
+
+
+
+int read_touchkey(uint16_t reg_touchkey)
+{
+	if(value2 == reg_touchkey)
+	{
+		while(value2 == reg_touchkey);
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+		
+}
+
+
+
+int State_inMenu(void)
+{
+	if(read_touchkey(8) == 1)
+	{
+		Num_ofMenu = 1;
+		lcd16x2_clrscr();
+	}
+	
+	while(Num_ofMenu == 1) 
+	{
+		num_menu_1 = Wheel(num_menu);
+		sprintf(num,"n=%d  ",num_menu_1);
+		lcd16x2_gotoxy(7,0);
+		lcd16x2_puts(num);
+		num_menu = num_menu_1;
+		if(num_menu_1 == 2 )
+		{
+			Num_ofMenu = 2;
+			lcd16x2_clrscr();
+		}
+		
+		
+		sprintf(men,"Menu\n1-Volume");
+		lcd16x2_gotoxy(0,0);
+		lcd16x2_puts(men);
+		if(read_touchkey(8) == 1) 
+		{
+			Num_ofMenu = 0;
+			lcd16x2_clrscr();
+//			break;
+		}
+		if(read_touchkey(1) == 1)
+		{
+			lcd16x2_clrscr();
+			Num_ofSubMenu = 1;
+		}
+		while(Num_ofSubMenu == 1)
+		{
+			sprintf(men,"    Volume:%d  ",volume1);
+			lcd16x2_gotoxy(0,0);
+			lcd16x2_puts(men);
+			volume1= Slider(volume);
+			volume = volume1;
+			if(read_touchkey(8) == 1) 
+			{
+				Num_ofSubMenu = 0;
+				lcd16x2_clrscr();
+//				break;
+			}
+		}
+	}
+	
+	
+	
+	while(Num_ofMenu == 2) 
+	{
+		num_menu_1 = Wheel(num_menu);
+		sprintf(num,"n=%d  ",num_menu_1);
+		lcd16x2_gotoxy(7,0);
+		lcd16x2_puts(num);
+		num_menu = num_menu_1;
+		if(num_menu_1 == 0 )
+		{
+			Num_ofMenu = 1;
+			lcd16x2_clrscr();
+		}
+//		else if(num_menu_1 == 4 )
+//		{
+//			Num_ofMenu = 3;
+//			lcd16x2_clrscr();
+//		}
+		
+		
+		sprintf(men,"Menu\n2-Light");
+		lcd16x2_gotoxy(0,0);
+		lcd16x2_puts(men);
+		if(read_touchkey(8) == 1) 
+		{
+			Num_ofMenu = 0;
+			lcd16x2_clrscr();
+		}
+		if(read_touchkey(1) == 1)
+		{
+			lcd16x2_clrscr();
+			Num_ofSubMenu = 1;
+		}
+		while(Num_ofSubMenu == 1)
+		{
+			sprintf(men,"    Light:%d  ",light1);
+			lcd16x2_gotoxy(0,0);
+			lcd16x2_puts(men);
+			light1= Slider(light);
+			light = light1;
+			if(read_touchkey(8) == 1) 
+			{
+				Num_ofSubMenu = 0;
+				lcd16x2_clrscr();
+			}
+		}
+		
+	}
+	
+
+	
+	
+}
 
 

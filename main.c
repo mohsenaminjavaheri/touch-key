@@ -127,6 +127,8 @@ int main(void)
 		
 		DelayMs(100);
 		
+		State_inMenu();
+		
 		
 		if(value2 == 1) 
 		{
@@ -143,11 +145,11 @@ int main(void)
 //			DelayMs(200);
 //			if(value2 == 4) GPIOC->ODR ^= GPIO_Pin_13;
 //		}
-		if(value2 == 8)
-		{
-			DelayMs(200);
-			if(value2 == 8) Menu();
-		}
+//		if(value2 == 8)
+//		{
+//			DelayMs(200);
+//			if(value2 == 8) Menu();
+//		}
 		if(value2 == 12)
 		{
 			DelayMs(200);
