@@ -483,68 +483,67 @@ void Menu (void)
 					}
 				}
 				break;
-			
-//			case 4:
-//			case 5:
-//				sprintf(men,"Menu\n3-Wifi Setting");
-//				lcd16x2_gotoxy(0,0);
-//				lcd16x2_puts(men);
-//				while(Enter == 1)
-//				{
-//					sprintf(men,"IP:       \n%3d.%3d.%3d.%3d",ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-//					lcd16x2_gotoxy(0,0);
-//					lcd16x2_puts(men);
-//					ip_1_1= Hold(ip_1,0,1);
-//					ip_1  = ip_1_1;
-//					if(value2 == 1)		Enter1=1;
-//					if(value2 == 8)		Enter=0;
-//						
-//						while(Enter1 ==1)
-//						{
-//							sprintf(men,"IP:\n%3d.%3d.%3d.%3d",ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-//							lcd16x2_gotoxy(0,0);
-//							lcd16x2_blink_on();
-//							lcd16x2_puts(men);
-//							ip_2_2= Hold(ip_2,4,1);
-//							ip_2  = ip_2_2;
-//							if(value2 == 1) Enter2=1;
-//							if(value2 == 8)		Enter1=0;
+				
+			case 4:
+			case 5:
+				sprintf(men,"Menu\n3-Wifi Setting");
+				lcd16x2_gotoxy(0,0);
+				lcd16x2_puts(men);
+				while(Enter == 1)
+				{
+					sprintf(men,"IP:%d       \n%3d.%3d.%3d.%3d",ip_1_1,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
+					lcd16x2_gotoxy(0,0);
+					lcd16x2_puts(men);
+					ip_1_1= Hold(ip_1,3,0);
+					ip_1  = ip_1_1;
+					if(value2 == 1)		Enter1=1;
+					if(value2 == 8)		Enter=0;
+						
+						while(Enter1 ==1)
+						{
+							sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_2_2,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
+							lcd16x2_gotoxy(0,0);
+							lcd16x2_puts(men);
+							ip_2_2= Hold(ip_2,3,0);
+							ip_2  = ip_2_2;
+							if(value2 == 1) Enter2=1;
+							if(value2 == 8)		Enter1=0;
 
-//						
-//							while(Enter2==1)
-//							{
-//								sprintf(men,"IP:\n%3d.%3d.%3d.%3d",ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-//								lcd16x2_gotoxy(0,0);
-//								lcd16x2_puts(men);
-//								ip_3_3= Hold(ip_3,7,1);
-//								ip_3  = ip_3_3;
-//								if(value2 == 1) Enter3=1;
-//								if(value2 == 8)		Enter2=0;
+						
+							while(Enter2==1)
+							{
+								sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_3_3,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
+								lcd16x2_gotoxy(0,0);
+								lcd16x2_puts(men);
+								ip_3_3= Hold(ip_3,3,0);
+								ip_3  = ip_3_3;
+								if(value2 == 1) Enter3=1;
+								if(value2 == 8)		Enter2=0;
 
-//								while(Enter3==1)
-//								{
-//									sprintf(men,"IP:\n%3d.%3d.%3d.%3d",ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-//									lcd16x2_gotoxy(0,0);
-//									lcd16x2_puts(men);
-//									ip_4_4= Hold(ip_4,11,1);
-//									ip_4  = ip_4_4;
-//									if(value2 == 1)
-//									{
-//										DelayMs(100);
-//										if(value2 == 1) 
-//										{
-//											Enter=0;
-//											Enter1=0;
-//											Enter2=0;
-//											Enter3=0;
-//										}									
-//									}
-//									if(value2 == 8)	Enter3=0;
-//								}
-//							}
-//						}
-//					}
-					}					
+								while(Enter3==1)
+								{
+									sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_4_4,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
+									lcd16x2_gotoxy(0,0);
+									lcd16x2_puts(men);
+									ip_4_4= Hold(ip_4,3,0);
+									ip_4  = ip_4_4;
+									if(value2 == 1)
+									{
+										DelayMs(100);
+										if(value2 == 1) 
+										{
+											Enter=0;
+											Enter1=0;
+											Enter2=0;
+											Enter3=0;
+										}									
+									}
+									if(value2 == 8)	Enter3=0;
+								}
+							}
+						}
+					}
+			}					
 				
 				
 
@@ -557,12 +556,12 @@ void Menu (void)
 				Enter=0;
 			}
 		}
-
 		
 	num_menu = num_menu_1;
+	}
 	num_menu=0;
 	Exit=0;
-	}
+	
 }
 
 
