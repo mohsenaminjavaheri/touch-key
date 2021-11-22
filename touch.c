@@ -35,10 +35,6 @@ char num[32];
 uint16_t regvalue;
 uint16_t regvalue2;
 
-uint8_t Enter=0;
-uint8_t Enter1=0;
-uint8_t Enter2=0;
-uint8_t Enter3=0;
 char men[32];
 
 char ip[16]={"192.168.1.1"};
@@ -415,160 +411,6 @@ void Password(uint8_t PASS_Length , char PASS[5] )
 	}				
 }
 
-//void Menu (void)
-//{
-//	lcd16x2_clrscr();
-//	while (Exit == 0)
-//	{
-//		num_menu_1 = Wheel(num_menu);
-//		sprintf(num,"n=%d  ",num_menu_1);
-//		lcd16x2_gotoxy(7,0);
-//		lcd16x2_puts(num);
-//		if(value2 == 1)
-//		{
-//			DelayMs(200);
-//			if(value2 == 1) 
-//			{
-//				Enter=1;
-//			}
-//		}
-//		switch (num_menu_1) 
-//		{
-//			case 0:
-//			case 1:
-//				sprintf(men,"Menu\n1-Volume");
-//				lcd16x2_gotoxy(0,0);
-//				lcd16x2_puts(men);
-//				
-//				while(Enter == 1)
-//				{
-//					sprintf(men,"\nVolume:%d  ",volume1);
-//					lcd16x2_gotoxy(0,0);
-//					lcd16x2_puts(men);
-//					volume1= Slider(volume);
-//					volume = volume1;
-//					if(value2 == 8)
-//					{
-//						DelayMs(200);
-//						if(value2 == 8) 
-//						{
-//							Enter=0;
-//							lcd16x2_clrscr();
-//						}
-//					}
-//				}
-//				break;
-//			
-//			case 2:
-//			case 3:
-//				sprintf(men,"Menu\n2-Light    ");
-//				lcd16x2_gotoxy(0,0);
-//				lcd16x2_puts(men);
-//				light1= Slider(light);
-//				light  = light1;
-//				while(Enter == 1)
-//				{
-//					sprintf(men,"\nLight:%d  ",light1);
-//					lcd16x2_gotoxy(0,0);
-//					lcd16x2_puts(men);
-//					light1= Slider(light);
-//					light  = light1;
-//					if(value2 == 8)
-//					{
-//						DelayMs(200);
-//						if(value2 == 8) 
-//						{
-//							Enter=0;
-//							lcd16x2_clrscr();
-//						}
-//					}
-//				}
-//				break;
-//				
-//			case 4:
-//			case 5:
-//				sprintf(men,"Menu\n3-Wifi Setting");
-//				lcd16x2_gotoxy(0,0);
-//				lcd16x2_puts(men);
-//				while(Enter == 1)
-//				{
-//					sprintf(men,"IP:%d       \n%3d.%3d.%3d.%3d",ip_1_1,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-//					lcd16x2_gotoxy(0,0);
-//					lcd16x2_puts(men);
-//					ip_1_1= Hold(ip_1,3,0);
-//					ip_1  = ip_1_1;
-//					if(value2 == 1)		Enter1=1;
-//					if(value2 == 8)		Enter=0;
-//						
-//						while(Enter1 ==1)
-//						{
-//							sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_2_2,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-//							lcd16x2_gotoxy(0,0);
-//							lcd16x2_puts(men);
-//							ip_2_2= Hold(ip_2,3,0);
-//							ip_2  = ip_2_2;
-//							if(value2 == 1) Enter2=1;
-//							if(value2 == 8)		Enter1=0;
-
-//						
-//							while(Enter2==1)
-//							{
-//								sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_3_3,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-//								lcd16x2_gotoxy(0,0);
-//								lcd16x2_puts(men);
-//								ip_3_3= Hold(ip_3,3,0);
-//								ip_3  = ip_3_3;
-//								if(value2 == 1) Enter3=1;
-//								if(value2 == 8)		Enter2=0;
-
-//								while(Enter3==1)
-//								{
-//									sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_4_4,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-//									lcd16x2_gotoxy(0,0);
-//									lcd16x2_puts(men);
-//									ip_4_4= Hold(ip_4,3,0);
-//									ip_4  = ip_4_4;
-//									if(value2 == 1)
-//									{
-//										DelayMs(100);
-//										if(value2 == 1) 
-//										{
-//											Enter=0;
-//											Enter1=0;
-//											Enter2=0;
-//											Enter3=0;
-//										}									
-//									}
-//									if(value2 == 8)	Enter3=0;
-//								}
-//							}
-//						}
-//					}
-//			}					
-//				
-//				
-
-//		if(value2 == 8)
-//		{
-//			DelayMs(100);
-//			if(value2 == 8) 
-//			{
-//				Exit=1;
-//				Enter=0;
-//			}
-//		}
-//		
-//	num_menu = num_menu_1;
-//	}
-//	num_menu=0;
-//	Exit=0;
-//	
-//}
-
-
-
-
-
 int read_touchkey(uint16_t reg_touchkey)
 {
 	if(value2 == reg_touchkey)
@@ -585,7 +427,7 @@ int read_touchkey(uint16_t reg_touchkey)
 
 
 
-int State_inMenu(void)
+void State_inMenu(void)
 {
 	if(read_touchkey(8) == 1)
 	{
@@ -632,7 +474,7 @@ int State_inMenu(void)
 			lcd16x2_puts(men);
 			volume1= Slider(volume);
 			volume = volume1;
-			if(read_touchkey(8) == 1) 
+			if(read_touchkey(1) == 1) 
 			{
 				Num_ofMenu = 1;
 				Num_ofSubMenu = 0;
@@ -683,7 +525,7 @@ int State_inMenu(void)
 			lcd16x2_puts(men);
 			light1= Slider(light);
 			light = light1;
-			if(read_touchkey(8) == 1) 
+			if(read_touchkey(1) == 1) 
 			{
 				Num_ofMenu = 2;
 				Num_ofSubMenu = 0;

@@ -72,30 +72,30 @@ int main(void)
 	
 	lcd16x2_gotoxy(0,0);
 		
-//	lcd16x2_puts("Please Wait...");
-//	
-//	for(int i=0;i<1;i++)
-//	{
-//		GPIOC->BSRR=GPIO_Pin_13;
-//		DelayMs(200);
-//		GPIOB->BSRR=GPIO_Pin_9;
-//		DelayMs(200);
-//		GPIOB->BSRR=GPIO_Pin_15;
-//		DelayMs(200);
-//		GPIOA->BSRR=GPIO_Pin_8;
-//		DelayMs(200);
+	lcd16x2_puts("Please Wait...");
+	
+	for(int i=0;i<1;i++)
+	{
+		GPIOC->BSRR=GPIO_Pin_13;
+		DelayMs(200);
+		GPIOB->BSRR=GPIO_Pin_9;
+		DelayMs(200);
+		GPIOB->BSRR=GPIO_Pin_15;
+		DelayMs(200);
+		GPIOA->BSRR=GPIO_Pin_8;
+		DelayMs(200);
 
-//		GPIOC->BRR=GPIO_Pin_13;
-//		DelayMs(200);		
-//		GPIOB->BRR=GPIO_Pin_9;
-//		DelayMs(200);
-//		GPIOB->BRR=GPIO_Pin_15;
-//		DelayMs(200);
-//		GPIOA->BRR=GPIO_Pin_8;
-//		DelayMs(200);		
-//	}
-//	
-//	lcd16x2_gotoxy(0,0);
+		GPIOC->BRR=GPIO_Pin_13;
+		DelayMs(200);		
+		GPIOB->BRR=GPIO_Pin_9;
+		DelayMs(200);
+		GPIOB->BRR=GPIO_Pin_15;
+		DelayMs(200);
+		GPIOA->BRR=GPIO_Pin_8;
+		DelayMs(200);		
+	}
+	
+	lcd16x2_gotoxy(0,0);
 		
 	lcd16x2_puts(" ***Hi HoE*** ");
 	
@@ -135,21 +135,7 @@ int main(void)
 			DelayMs(200);
 			if(value2 == 1) GPIOB->ODR ^= GPIO_Pin_15;
 		}
-//		if(value2 == 2)
-//		{
-//			DelayMs(200);
-//			if(value2 == 2) GPIOA->ODR ^= GPIO_Pin_8;
-//		}
-//		if(value2 == 4)
-//		{
-//			DelayMs(200);
-//			if(value2 == 4) GPIOC->ODR ^= GPIO_Pin_13;
-//		}
-//		if(value2 == 8)
-//		{
-//			DelayMs(200);
-//			if(value2 == 8) Menu();
-//		}
+
 		if(value2 == 12)
 		{
 			DelayMs(200);
@@ -164,21 +150,11 @@ int main(void)
 		if(flag == 1)
 		{
 			
-			if(value2 >= 0)
+			if(value2 > 0)
 			{
 				volume1 = Hold(volume,4,1);		
 				volume = volume1;
-			}
-						
-//			volume1= Slider(volume);
-//			light1= Wheel(light);
-//			volume = volume1;
-//			light  = light1;
-//			
-			
-		
-			flag = 0;
-	
+			}	
 		}
 	}
 }

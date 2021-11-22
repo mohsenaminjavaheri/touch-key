@@ -29,7 +29,7 @@ uint8_t Hold(uint32_t v_input,uint8_t x, uint8_t y);
 void Password(uint8_t PASS_Length , char PASS[5] );
 void Menu (void);
 int read_touchkey(uint16_t reg_touchkey);
-int State_inMenu(void);
+void State_inMenu(void);
 
 
 
