@@ -35,25 +35,23 @@ char num[32];
 uint16_t regvalue;
 uint16_t regvalue2;
 
-uint8_t Exit=0;
 uint8_t Enter=0;
 uint8_t Enter1=0;
 uint8_t Enter2=0;
 uint8_t Enter3=0;
 char men[32];
-uint16_t num_menu=0;
-uint16_t num_menu_1=0;
-uint16_t ip_1=192;
-uint16_t ip_1_1=192;
-uint16_t ip_2=168;
-uint16_t ip_2_2=168;
-uint16_t ip_3=1;
-uint16_t ip_3_3=1;
-uint16_t ip_4=1;
-uint16_t ip_4_4=1;
+
+char ip[16]={"192.168.1.1"};
+char Name[32] ={"Houshmand"};
 
 uint8_t Num_ofMenu=0;
 uint8_t Num_ofSubMenu = 0;
+uint8_t Exit=1;
+uint16_t wheel_menu=0;
+uint16_t wheel_menu_1=0;
+uint16_t wheel_submenu=0;
+uint16_t wheel_submenu_1=0;
+
 
 extern uint16_t volume;
 extern uint16_t volume1;
@@ -417,155 +415,155 @@ void Password(uint8_t PASS_Length , char PASS[5] )
 	}				
 }
 
-void Menu (void)
-{
-	lcd16x2_clrscr();
-	while (Exit == 0)
-	{
-		num_menu_1 = Wheel(num_menu);
-		sprintf(num,"n=%d  ",num_menu_1);
-		lcd16x2_gotoxy(7,0);
-		lcd16x2_puts(num);
-		if(value2 == 1)
-		{
-			DelayMs(200);
-			if(value2 == 1) 
-			{
-				Enter=1;
-			}
-		}
-		switch (num_menu_1) 
-		{
-			case 0:
-			case 1:
-				sprintf(men,"Menu\n1-Volume");
-				lcd16x2_gotoxy(0,0);
-				lcd16x2_puts(men);
-				
-				while(Enter == 1)
-				{
-					sprintf(men,"\nVolume:%d  ",volume1);
-					lcd16x2_gotoxy(0,0);
-					lcd16x2_puts(men);
-					volume1= Slider(volume);
-					volume = volume1;
-					if(value2 == 8)
-					{
-						DelayMs(200);
-						if(value2 == 8) 
-						{
-							Enter=0;
-							lcd16x2_clrscr();
-						}
-					}
-				}
-				break;
-			
-			case 2:
-			case 3:
-				sprintf(men,"Menu\n2-Light    ");
-				lcd16x2_gotoxy(0,0);
-				lcd16x2_puts(men);
-				light1= Slider(light);
-				light  = light1;
-				while(Enter == 1)
-				{
-					sprintf(men,"\nLight:%d  ",light1);
-					lcd16x2_gotoxy(0,0);
-					lcd16x2_puts(men);
-					light1= Slider(light);
-					light  = light1;
-					if(value2 == 8)
-					{
-						DelayMs(200);
-						if(value2 == 8) 
-						{
-							Enter=0;
-							lcd16x2_clrscr();
-						}
-					}
-				}
-				break;
-				
-			case 4:
-			case 5:
-				sprintf(men,"Menu\n3-Wifi Setting");
-				lcd16x2_gotoxy(0,0);
-				lcd16x2_puts(men);
-				while(Enter == 1)
-				{
-					sprintf(men,"IP:%d       \n%3d.%3d.%3d.%3d",ip_1_1,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-					lcd16x2_gotoxy(0,0);
-					lcd16x2_puts(men);
-					ip_1_1= Hold(ip_1,3,0);
-					ip_1  = ip_1_1;
-					if(value2 == 1)		Enter1=1;
-					if(value2 == 8)		Enter=0;
-						
-						while(Enter1 ==1)
-						{
-							sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_2_2,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-							lcd16x2_gotoxy(0,0);
-							lcd16x2_puts(men);
-							ip_2_2= Hold(ip_2,3,0);
-							ip_2  = ip_2_2;
-							if(value2 == 1) Enter2=1;
-							if(value2 == 8)		Enter1=0;
+//void Menu (void)
+//{
+//	lcd16x2_clrscr();
+//	while (Exit == 0)
+//	{
+//		num_menu_1 = Wheel(num_menu);
+//		sprintf(num,"n=%d  ",num_menu_1);
+//		lcd16x2_gotoxy(7,0);
+//		lcd16x2_puts(num);
+//		if(value2 == 1)
+//		{
+//			DelayMs(200);
+//			if(value2 == 1) 
+//			{
+//				Enter=1;
+//			}
+//		}
+//		switch (num_menu_1) 
+//		{
+//			case 0:
+//			case 1:
+//				sprintf(men,"Menu\n1-Volume");
+//				lcd16x2_gotoxy(0,0);
+//				lcd16x2_puts(men);
+//				
+//				while(Enter == 1)
+//				{
+//					sprintf(men,"\nVolume:%d  ",volume1);
+//					lcd16x2_gotoxy(0,0);
+//					lcd16x2_puts(men);
+//					volume1= Slider(volume);
+//					volume = volume1;
+//					if(value2 == 8)
+//					{
+//						DelayMs(200);
+//						if(value2 == 8) 
+//						{
+//							Enter=0;
+//							lcd16x2_clrscr();
+//						}
+//					}
+//				}
+//				break;
+//			
+//			case 2:
+//			case 3:
+//				sprintf(men,"Menu\n2-Light    ");
+//				lcd16x2_gotoxy(0,0);
+//				lcd16x2_puts(men);
+//				light1= Slider(light);
+//				light  = light1;
+//				while(Enter == 1)
+//				{
+//					sprintf(men,"\nLight:%d  ",light1);
+//					lcd16x2_gotoxy(0,0);
+//					lcd16x2_puts(men);
+//					light1= Slider(light);
+//					light  = light1;
+//					if(value2 == 8)
+//					{
+//						DelayMs(200);
+//						if(value2 == 8) 
+//						{
+//							Enter=0;
+//							lcd16x2_clrscr();
+//						}
+//					}
+//				}
+//				break;
+//				
+//			case 4:
+//			case 5:
+//				sprintf(men,"Menu\n3-Wifi Setting");
+//				lcd16x2_gotoxy(0,0);
+//				lcd16x2_puts(men);
+//				while(Enter == 1)
+//				{
+//					sprintf(men,"IP:%d       \n%3d.%3d.%3d.%3d",ip_1_1,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
+//					lcd16x2_gotoxy(0,0);
+//					lcd16x2_puts(men);
+//					ip_1_1= Hold(ip_1,3,0);
+//					ip_1  = ip_1_1;
+//					if(value2 == 1)		Enter1=1;
+//					if(value2 == 8)		Enter=0;
+//						
+//						while(Enter1 ==1)
+//						{
+//							sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_2_2,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
+//							lcd16x2_gotoxy(0,0);
+//							lcd16x2_puts(men);
+//							ip_2_2= Hold(ip_2,3,0);
+//							ip_2  = ip_2_2;
+//							if(value2 == 1) Enter2=1;
+//							if(value2 == 8)		Enter1=0;
 
-						
-							while(Enter2==1)
-							{
-								sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_3_3,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-								lcd16x2_gotoxy(0,0);
-								lcd16x2_puts(men);
-								ip_3_3= Hold(ip_3,3,0);
-								ip_3  = ip_3_3;
-								if(value2 == 1) Enter3=1;
-								if(value2 == 8)		Enter2=0;
+//						
+//							while(Enter2==1)
+//							{
+//								sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_3_3,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
+//								lcd16x2_gotoxy(0,0);
+//								lcd16x2_puts(men);
+//								ip_3_3= Hold(ip_3,3,0);
+//								ip_3  = ip_3_3;
+//								if(value2 == 1) Enter3=1;
+//								if(value2 == 8)		Enter2=0;
 
-								while(Enter3==1)
-								{
-									sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_4_4,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
-									lcd16x2_gotoxy(0,0);
-									lcd16x2_puts(men);
-									ip_4_4= Hold(ip_4,3,0);
-									ip_4  = ip_4_4;
-									if(value2 == 1)
-									{
-										DelayMs(100);
-										if(value2 == 1) 
-										{
-											Enter=0;
-											Enter1=0;
-											Enter2=0;
-											Enter3=0;
-										}									
-									}
-									if(value2 == 8)	Enter3=0;
-								}
-							}
-						}
-					}
-			}					
-				
-				
+//								while(Enter3==1)
+//								{
+//									sprintf(men,"IP:%d   \n%3d.%3d.%3d.%3d",ip_4_4,ip_1_1,ip_2_2,ip_3_3,ip_4_4);
+//									lcd16x2_gotoxy(0,0);
+//									lcd16x2_puts(men);
+//									ip_4_4= Hold(ip_4,3,0);
+//									ip_4  = ip_4_4;
+//									if(value2 == 1)
+//									{
+//										DelayMs(100);
+//										if(value2 == 1) 
+//										{
+//											Enter=0;
+//											Enter1=0;
+//											Enter2=0;
+//											Enter3=0;
+//										}									
+//									}
+//									if(value2 == 8)	Enter3=0;
+//								}
+//							}
+//						}
+//					}
+//			}					
+//				
+//				
 
-		if(value2 == 8)
-		{
-			DelayMs(100);
-			if(value2 == 8) 
-			{
-				Exit=1;
-				Enter=0;
-			}
-		}
-		
-	num_menu = num_menu_1;
-	}
-	num_menu=0;
-	Exit=0;
-	
-}
+//		if(value2 == 8)
+//		{
+//			DelayMs(100);
+//			if(value2 == 8) 
+//			{
+//				Exit=1;
+//				Enter=0;
+//			}
+//		}
+//		
+//	num_menu = num_menu_1;
+//	}
+//	num_menu=0;
+//	Exit=0;
+//	
+//}
 
 
 
@@ -592,37 +590,41 @@ int State_inMenu(void)
 	if(read_touchkey(8) == 1)
 	{
 		Num_ofMenu = 1;
+		Exit = 0;
 		lcd16x2_clrscr();
 	}
-	
-	while(Num_ofMenu == 1) 
+	while(Exit == 0)
 	{
-		num_menu_1 = Wheel(num_menu);
-		sprintf(num,"n=%d  ",num_menu_1);
-		lcd16x2_gotoxy(7,0);
-		lcd16x2_puts(num);
-		num_menu = num_menu_1;
-		if(num_menu_1 == 2 )
+		// vloume menu
+		while(Num_ofMenu == 1) 
 		{
-			Num_ofMenu = 2;
-			lcd16x2_clrscr();
+			sprintf(men,"Menu\n1-Volume");
+			lcd16x2_gotoxy(0,0);
+			lcd16x2_puts(men);
+			
+			wheel_menu_1 = Wheel(wheel_menu);
+			wheel_menu = wheel_menu_1;
+			if(wheel_menu_1 == 2 )
+			{
+				Num_ofMenu = 2;
+				lcd16x2_clrscr();
+			}
+		
+			if(read_touchkey(8) == 1) 
+			{
+				Num_ofMenu = 0;
+				Exit = 1;
+				lcd16x2_clrscr();
+			}
+			if(read_touchkey(1) == 1)
+			{
+				lcd16x2_clrscr();
+				Num_ofMenu = 0;
+				Num_ofSubMenu = 1;
+			}
 		}
 		
-		
-		sprintf(men,"Menu\n1-Volume");
-		lcd16x2_gotoxy(0,0);
-		lcd16x2_puts(men);
-		if(read_touchkey(8) == 1) 
-		{
-			Num_ofMenu = 0;
-			lcd16x2_clrscr();
-//			break;
-		}
-		if(read_touchkey(1) == 1)
-		{
-			lcd16x2_clrscr();
-			Num_ofSubMenu = 1;
-		}
+		//Sub-Menu of volume
 		while(Num_ofSubMenu == 1)
 		{
 			sprintf(men,"    Volume:%d  ",volume1);
@@ -632,48 +634,49 @@ int State_inMenu(void)
 			volume = volume1;
 			if(read_touchkey(8) == 1) 
 			{
+				Num_ofMenu = 1;
 				Num_ofSubMenu = 0;
 				lcd16x2_clrscr();
-//				break;
 			}
 		}
-	}
-	
-	
-	
-	while(Num_ofMenu == 2) 
-	{
-		num_menu_1 = Wheel(num_menu);
-		sprintf(num,"n=%d  ",num_menu_1);
-		lcd16x2_gotoxy(7,0);
-		lcd16x2_puts(num);
-		num_menu = num_menu_1;
-		if(num_menu_1 == 0 )
-		{
-			Num_ofMenu = 1;
-			lcd16x2_clrscr();
-		}
-//		else if(num_menu_1 == 4 )
-//		{
-//			Num_ofMenu = 3;
-//			lcd16x2_clrscr();
-//		}
 		
 		
-		sprintf(men,"Menu\n2-Light");
-		lcd16x2_gotoxy(0,0);
-		lcd16x2_puts(men);
-		if(read_touchkey(8) == 1) 
+		
+		//Light menu
+		while(Num_ofMenu == 2) 
 		{
-			Num_ofMenu = 0;
-			lcd16x2_clrscr();
+			sprintf(men,"Menu\n2-Light");
+			lcd16x2_gotoxy(0,0);
+			lcd16x2_puts(men);
+			
+			wheel_menu_1 = Wheel(wheel_menu);
+			wheel_menu = wheel_menu_1;
+			if(wheel_menu_1 == 0 )
+			{
+				Num_ofMenu = 1;
+				lcd16x2_clrscr();
+			}
+			else if(wheel_menu_1 == 4 )
+			{
+				Num_ofMenu = 3;
+				lcd16x2_clrscr();
+			}
+			
+			if(read_touchkey(8) == 1) 
+			{
+				Num_ofMenu = 0;
+				Exit=1;
+				lcd16x2_clrscr();
+			}
+			if(read_touchkey(1) == 1)
+			{
+				Num_ofMenu = 0;
+				Num_ofSubMenu = 2;
+				lcd16x2_clrscr();
+			}
 		}
-		if(read_touchkey(1) == 1)
-		{
-			lcd16x2_clrscr();
-			Num_ofSubMenu = 1;
-		}
-		while(Num_ofSubMenu == 1)
+		//Sub-Menu of light
+		while(Num_ofSubMenu == 2)
 		{
 			sprintf(men,"    Light:%d  ",light1);
 			lcd16x2_gotoxy(0,0);
@@ -682,16 +685,116 @@ int State_inMenu(void)
 			light = light1;
 			if(read_touchkey(8) == 1) 
 			{
+				Num_ofMenu = 2;
 				Num_ofSubMenu = 0;
+				lcd16x2_clrscr();
+			}
+		}		
+			
+		
+		//wifi menu
+		while(Num_ofMenu == 3)
+		{
+			sprintf(men,"Menu\n3-Wifi Setting");
+			lcd16x2_gotoxy(0,0);
+			lcd16x2_puts(men);
+			
+			wheel_menu_1 = Wheel(wheel_menu);
+			wheel_menu = wheel_menu_1;
+			if(wheel_menu_1 == 2 )
+			{
+				Num_ofMenu = 2;			
+				lcd16x2_clrscr();
+			}
+//			else if(wheel_menu_1 == 4 )
+//			{
+//				Num_ofMenu = 3;
+//				lcd16x2_clrscr();
+//			}
+			
+			if(read_touchkey(8) == 1) 
+			{
+				Num_ofMenu = 0;
+				Exit=1;
+				lcd16x2_clrscr();
+			}
+			if(read_touchkey(1) == 1)
+			{
+				Num_ofMenu = 0;	
+				Num_ofSubMenu = 3;
 				lcd16x2_clrscr();
 			}
 		}
 		
-	}
-	
-
-	
-	
+		
+		//1- Sum-Menu of wifi : wifi Name
+		while(Num_ofSubMenu == 3)
+		{
+			sprintf(men,"1-Name:");
+			lcd16x2_gotoxy(0,0);
+			lcd16x2_puts(men);
+			lcd16x2_gotoxy(7,0);
+			lcd16x2_puts(Name);
+			light1= Slider(light);
+			light = light1;
+			
+			
+			wheel_submenu_1 = Wheel(wheel_submenu);
+			wheel_submenu = wheel_submenu_1;
+			if(wheel_submenu_1 == 2)
+			{
+				Num_ofSubMenu=4;					
+				lcd16x2_clrscr();
+			}
+			
+			if(read_touchkey(8) == 1) 
+			{
+				Num_ofMenu = 3;	
+				Num_ofSubMenu = 0;
+				lcd16x2_clrscr();
+			}
+		}	
+			//2- Sum-Menu of wifi : wifi IP
+			while(Num_ofSubMenu == 4)
+			{
+				sprintf(men,"2-IP:");
+				lcd16x2_gotoxy(0,0);
+				lcd16x2_puts(men);
+				lcd16x2_gotoxy(5,0);
+				lcd16x2_puts(ip);
+				light1= Slider(light);
+				light = light1;
+				
+				
+				wheel_submenu_1 = Wheel(wheel_submenu);
+				wheel_submenu = wheel_submenu_1;
+				if(wheel_submenu_1 == 0)
+				{
+					Num_ofSubMenu=3;					
+					lcd16x2_clrscr();
+				}
+//				if(wheel_submenu_1 == 4)
+//				{
+//					Num_ofSubMenu=3;					
+//					lcd16x2_clrscr();
+//				}
+							
+				if(read_touchkey(8) == 1) 
+				{
+					Num_ofMenu = 3;	
+					Num_ofSubMenu = 0;
+					lcd16x2_clrscr();
+				}
+			}
+			
+//			while(Num_ofSubMenu == 3)
+//			{
+//				
+//			}
+		
+		
+		
+	}	
 }
 
 
