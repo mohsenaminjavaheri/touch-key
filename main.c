@@ -70,6 +70,16 @@ int main(void)
 	
 	lcd16x2_init(LCD16X2_DISPLAY_ON_CURSOR_OFF_BLINK_OFF);
 	
+	mpr121_init();
+	
+	EXTI9_5_Init();
+	
+	char password[3]={1,4,8};
+	
+//	Password(3,password);
+	
+//	DelayMs(100);
+	
 	lcd16x2_gotoxy(0,0);
 		
 	lcd16x2_puts("Please Wait...");
@@ -102,17 +112,10 @@ int main(void)
 	DelayMs(1000);
 	
 	lcd16x2_clrscr();
-
-	mpr121_init();
-	
-	EXTI9_5_Init();
 	
 	RTC_config();
-
 	
-//	char password[3]={1,4,8};
-//	
-//	Password(3,password);
+	
 	
 	while(1)
 	{
@@ -125,36 +128,28 @@ int main(void)
 			
 		lcd16x2_puts(str);
 		
-		DelayMs(100);
-		
 		State_inMenu();
 		
 		
-		if(value2 == 1) 
+		if(read_touchkey(1) == 1)
 		{
-			DelayMs(200);
-			if(value2 == 1) GPIOB->ODR ^= GPIO_Pin_15;
+			GPIOA->ODR ^= GPIO_Pin_8;
 		}
-
-		if(value2 == 12)
+		if(read_touchkey(2) == 1)
 		{
-			DelayMs(200);
-			if(value2 == 12) GPIOA->ODR ^= GPIO_Pin_1;
+			GPIOB->ODR ^= GPIO_Pin_15;
 		}
-		if(value2 == 3)
+		if(read_touchkey(12) == 1)
 		{
-			DelayMs(200);
-			if(value2 == 3) GPIOA->ODR ^= GPIO_Pin_0;
+			GPIOA->ODR ^= GPIO_Pin_1;
+		}
+		if(read_touchkey(3) == 1)
+		{
+			GPIOA->ODR ^= GPIO_Pin_0;
 		}
 		
-		if(flag == 1)
-		{
-			
-			if(value2 > 0)
-			{
-				volume1 = Hold(volume,4,1);		
-				volume = volume1;
-			}	
-		}
+		volume1 = Slider(volume);		
+		volume = volume1;
+
 	}
 }

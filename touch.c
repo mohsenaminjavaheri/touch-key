@@ -331,9 +331,7 @@ void Password(uint8_t PASS_Length , char PASS[5] )
 	lcd16x2_puts(num);
 	
 	while(pass!=1)
-	{
-		lcd16x2_clrscr();
-		
+	{		
 		read_register(TS2 , &value);
 		
 		lcd16x2_gotoxy(0,0);
@@ -345,8 +343,14 @@ void Password(uint8_t PASS_Length , char PASS[5] )
 		if(value==0)
 		{
 			ff++;
-			DelayMs(10);
-			if(ff>=10){i=0;k=0;ff=0;sprintf(num,"Password:");}
+			DelayMs(1);
+			if(ff>=30)
+			{
+				i=0;
+				k=0;
+				ff=0;
+				lcd16x2_clrscr();
+				sprintf(num,"Password:");}
 			
 		}
 		if(value != regvalue2  &  value!=0)
@@ -354,37 +358,36 @@ void Password(uint8_t PASS_Length , char PASS[5] )
 			ff=0;
 			touch[i]=value;
 			i++;
-			switch (PASS_Length)
+			if(PASS_Length == 3)
 			{
-				case 3 :
-									switch (i)
-									{
-										case 1: sprintf(num,"Password:%d",value);	break;
-										case 2: sprintf(num,"Password:*%d",value); break;
-										case 3: sprintf(num,"Password:**%d",value);	break;
-									}
-									break;
-				case 4 : 
-									switch (i)
-									{
-										case 1: sprintf(num,"Password:%d",value);	break;
-										case 2: sprintf(num,"Password:*%d",value);	break;
-										case 3: sprintf(num,"Password:**%d",value);  break;
-										case 4: sprintf(num,"Password:***%d",value);	 break;
-									}
-									break;
-				case 5 :
-									switch (i)
-									{
-										case 1: sprintf(num,"Password:%d",value);	break;
-										case 2: sprintf(num,"Password:*%d",value);	break;
-										case 3: sprintf(num,"Password:**%d",value);  break;
-										case 4: sprintf(num,"Password:***%d",value);  break;
-										case 5: sprintf(num,"Password:****%d",value);  break;
-									}
-									break;
+				switch (i)
+				{
+					case 1: sprintf(num,"Password:%d",value);	break;
+					case 2: sprintf(num,"Password:*%d",value); break;
+					case 3: sprintf(num,"Password:**%d",value);	break;
+				}
 			}
-			
+			else if(PASS_Length == 4)
+			{
+				switch (i)
+				{
+					case 1: sprintf(num,"Password:%d",value);	break;
+					case 2: sprintf(num,"Password:*%d",value);	break;
+					case 3: sprintf(num,"Password:**%d",value);  break;
+					case 4: sprintf(num,"Password:***%d",value);	 break;
+				}
+			}
+			else if(PASS_Length == 5)
+			{
+				switch (i)
+				{
+					case 1: sprintf(num,"Password:%d",value);	break;
+					case 2: sprintf(num,"Password:*%d",value);	break;
+					case 3: sprintf(num,"Password:**%d",value);  break;
+					case 4: sprintf(num,"Password:***%d",value);  break;
+					case 5: sprintf(num,"Password:****%d",value);  break;
+				}
+			}		
 		}
 		
 		regvalue2 = value;
