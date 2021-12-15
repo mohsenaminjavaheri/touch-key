@@ -26,3 +26,5 @@
 .\objects\touch.o: delay.h
 .\objects\touch.o: lcd16_2.h
 .\objects\touch.o: touch.h
+.\objects\touch.o: ESP07.h
+.\objects\touch.o: usart.h

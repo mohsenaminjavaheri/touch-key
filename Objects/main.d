@@ -29,3 +29,4 @@
 .\objects\main.o: touch.h
 .\objects\main.o: RTC.h
 .\objects\main.o: usart.h
+.\objects\main.o: ESP07.h

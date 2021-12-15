@@ -12,6 +12,7 @@
 #include "touch.h"
 #include "RTC.h"
 #include "usart.h"
+#include "ESP07.h"
 
 
 
@@ -25,15 +26,17 @@ uint16_t light=30;
 uint16_t light1=30;
 
 
-uint8_t flag;
+extern uint8_t flag;
 
 char str[32];
 
 
 char c;
-char buf[256];
+extern char buf[256];
 uint8_t F;
 uint32_t u=0;
+extern uint32_t d;
+extern uint8_t L;
 
 void EXTI9_5_IRQHandler(void)
 {
@@ -53,6 +56,33 @@ void EXTI9_5_IRQHandler(void)
 		EXTI_ClearFlag(EXTI_Line8);
 		EXTI_ClearITPendingBit(EXTI_Line8);
 	}			
+}
+
+
+void USART1_IRQHandler(void)
+{
+  if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+  {
+    /* Read one byte from the receive data register */
+    c = USART_ReceiveData(USART1);
+		
+		// Read chars until newline
+		if (c != '\n')
+		{
+					F = 0;	
+					// Concat char to buffer
+					// If maximum buffer size is reached, then reset i to 0
+					buf[d] = c;
+					d++;			
+		}
+		else
+		{
+					// Display received string to LCD
+					F=1;		
+					flag = 1;	
+					L=d;
+		}
+  }
 }
 
 
@@ -146,6 +176,8 @@ int main(void)
 	lcd16x2_clrscr();
 	
 	RTC_config();
+	
+	USART1_Init( 115200 , USART_IT_RXNE , ENABLE);
 	
 	USART2_Init ( 115200 , USART_IT_RXNE, ENABLE);
 

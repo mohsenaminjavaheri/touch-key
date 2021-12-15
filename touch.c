@@ -13,6 +13,10 @@
 #include "delay.h"
 #include "lcd16_2.h"
 #include "touch.h"
+#include "ESP07.h"
+#include "usart.h"
+
+#define AT_Command            "AT\r\n"
 
 extern uint16_t value;
 extern uint16_t value2;
@@ -48,6 +52,12 @@ uint16_t wheel_menu_1=0;
 uint16_t wheel_submenu=0;
 uint16_t wheel_submenu_1=0;
 
+
+extern uint8_t L;
+extern uint16_t flag;
+extern char buf[256];
+extern uint16_t p;
+uint32_t d;
 
 extern uint16_t volume;
 extern uint16_t volume1;
@@ -572,17 +582,12 @@ void State_inMenu(void)
 		}
 		
 		
-		//1- Sum-Menu of wifi : wifi Name
+		//1- Sum-Menu of wifi : wifi config OK
 		while(Num_ofSubMenu == 3)
 		{
-			sprintf(men,"1-Name:");
+			sprintf(men,"1-wifi config");
 			lcd16x2_gotoxy(0,0);
-			lcd16x2_puts(men);
-			lcd16x2_gotoxy(7,0);
-			lcd16x2_puts(Name);
-			light1= Slider(light);
-			light = light1;
-			
+			lcd16x2_puts(men);			
 			
 			wheel_submenu_1 = Wheel(wheel_submenu);
 			wheel_submenu = wheel_submenu_1;
@@ -598,6 +603,27 @@ void State_inMenu(void)
 				Num_ofSubMenu = 0;
 				lcd16x2_clrscr();
 			}
+			
+			if(read_touchkey(1) == 1)
+			{
+				USART1_PutString(AT_Command);		
+				DelayMs(100);
+				while(p != 1)
+				{
+					lcd16x2_clrscr();
+					p = lcd16x2_ShowDisplayShiftLeft(buf,L,flag);
+					flag = 0;
+					DelayMs(3000);			
+				}
+				for(int r=0 ; r<L ; r++)
+				{ 
+					buf[r]=0;
+				}
+				d=0;
+				p=0;
+				Num_ofMenu = 0;	
+				Num_ofSubMenu = 3;
+				lcd16x2_clrscr();
 		}	
 			//2- Sum-Menu of wifi : wifi IP
 			while(Num_ofSubMenu == 4)
@@ -607,8 +633,7 @@ void State_inMenu(void)
 				lcd16x2_puts(men);
 				lcd16x2_gotoxy(5,0);
 				lcd16x2_puts(ip);
-				light1= Slider(light);
-				light = light1;
+
 				
 				
 				wheel_submenu_1 = Wheel(wheel_submenu);
@@ -639,7 +664,6 @@ void State_inMenu(void)
 		
 		
 		
-	}	
+		}	
+	}
 }
-
-
