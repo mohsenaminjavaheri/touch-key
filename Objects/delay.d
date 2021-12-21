@@ -17,5 +17,6 @@
 .\objects\delay.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\StdPeriph_Driver\inc\stm32f10x_pwr.h
 .\objects\delay.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\StdPeriph_Driver\inc\stm32f10x_rcc.h
 .\objects\delay.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\StdPeriph_Driver\inc\stm32f10x_rtc.h
+.\objects\delay.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\StdPeriph_Driver\inc\stm32f10x_tim.h
 .\objects\delay.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\StdPeriph_Driver\inc\stm32f10x_usart.h
 .\objects\delay.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\StdPeriph_Driver\inc\misc.h

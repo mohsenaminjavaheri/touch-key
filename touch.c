@@ -16,7 +16,13 @@
 #include "ESP07.h"
 #include "usart.h"
 
-#define AT_Command            "AT\r\n"
+#define AT_Command                                    "AT\r\n"
+#define GET_IP_Command                             "AT+CIFSR\r\n"
+#define WIFI_CONNECTED_Command            "AT+CWJAP?\r\n"
+#define WIFI_HOTSPOT_Command                 "AT+CWSAP?\r\n"
+#define Reset_Command                                "AT+RST\r\n"
+#define Equalizer_Command                           "ATE0\r\n"
+
 
 extern uint16_t value;
 extern uint16_t value2;
@@ -44,20 +50,43 @@ char men[32];
 char ip[16]={"192.168.1.1"};
 char Name[32] ={"Houshmand"};
 
-uint8_t Num_ofMenu=0;
-uint8_t Num_ofSubMenu = 0;
-uint8_t Exit=1;
+uint8_t current_Menu=0;                    //         read_touchkey(Menu_Key) == Touched
+uint8_t current_SubMenu = 0;             //        read_touchkey(Enter_Key) == Touched
+uint8_t Exit_OfMenu=1;                              
+
 uint16_t wheel_menu=0;
 uint16_t wheel_menu_1=0;
 uint16_t wheel_submenu=0;
 uint16_t wheel_submenu_1=0;
 
+#define Menu_Key                              8
+#define Enter_Key                              1
+
+#define Touched																 1
+
+#define Exit                                        1
+
+#define OutFromMenu                         0
+#define Volume_Menu                         1
+#define Light_Menu                             2
+#define WiFi_Menu                             3
+
+#define OutFromSubMenu      					   0
+#define volume_SubMenu       					   1
+#define Light_SubMenu          					   2
+#define WiFiConfig_SubMenu    			     3
+#define WiFiIP_SubMenu    			           4
+#define WiFiStatus_SubMenu       		   5
+#define WiFiHotspot_SubMenu     	     6
+#define WiFiEqualizer_SubMenu  		     7
+#define WiFiReset_SubMenu       			   8
 
 extern uint8_t L;
 extern uint16_t flag;
 extern char buf[256];
 extern uint16_t p;
 uint32_t d;
+uint32_t t;
 
 extern uint16_t volume;
 extern uint16_t volume1;
@@ -442,16 +471,21 @@ int read_touchkey(uint16_t reg_touchkey)
 
 void State_inMenu(void)
 {
-	if(read_touchkey(8) == 1)
+	
+	if(read_touchkey(Menu_Key) == Touched)
 	{
-		Num_ofMenu = 1;
-		Exit = 0;
+		wheel_menu=0;
+		wheel_submenu=0;
+		current_Menu = Volume_Menu;
+		Exit_OfMenu = !Exit;
 		lcd16x2_clrscr();
 	}
-	while(Exit == 0)
+	
+	
+	while(Exit_OfMenu != Exit)
 	{
 		// vloume menu
-		while(Num_ofMenu == 1) 
+		while(current_Menu == Volume_Menu) 
 		{
 			sprintf(men,"Menu\n1-Volume");
 			lcd16x2_gotoxy(0,0);
@@ -461,36 +495,36 @@ void State_inMenu(void)
 			wheel_menu = wheel_menu_1;
 			if(wheel_menu_1 == 2 )
 			{
-				Num_ofMenu = 2;
+				current_Menu = Light_Menu;
 				lcd16x2_clrscr();
 			}
 		
-			if(read_touchkey(8) == 1) 
+			if(read_touchkey(Menu_Key) == Touched) 
 			{
-				Num_ofMenu = 0;
-				Exit = 1;
+				current_Menu = OutFromMenu;
+				Exit_OfMenu = Exit;
 				lcd16x2_clrscr();
 			}
-			if(read_touchkey(1) == 1)
+			if(read_touchkey(Enter_Key) == Touched)
 			{
 				lcd16x2_clrscr();
-				Num_ofMenu = 0;
-				Num_ofSubMenu = 1;
+				current_Menu = OutFromMenu;
+				current_SubMenu = volume_SubMenu;
 			}
 		}
 		
 		//Sub-Menu of volume
-		while(Num_ofSubMenu == 1)
+		while(current_SubMenu == volume_SubMenu)
 		{
 			sprintf(men,"    Volume:%d  ",volume1);
 			lcd16x2_gotoxy(0,0);
 			lcd16x2_puts(men);
 			volume1= Slider(volume);
 			volume = volume1;
-			if(read_touchkey(1) == 1) 
+			if(read_touchkey(Enter_Key) == Touched) 
 			{
-				Num_ofMenu = 1;
-				Num_ofSubMenu = 0;
+				current_Menu = Volume_Menu;
+				current_SubMenu = OutFromSubMenu;
 				lcd16x2_clrscr();
 			}
 		}
@@ -498,7 +532,7 @@ void State_inMenu(void)
 		
 		
 		//Light menu
-		while(Num_ofMenu == 2) 
+		while(current_Menu == Light_SubMenu) 
 		{
 			sprintf(men,"Menu\n2-Light");
 			lcd16x2_gotoxy(0,0);
@@ -508,47 +542,47 @@ void State_inMenu(void)
 			wheel_menu = wheel_menu_1;
 			if(wheel_menu_1 == 0 )
 			{
-				Num_ofMenu = 1;
+				current_Menu = Volume_Menu;
 				lcd16x2_clrscr();
 			}
 			else if(wheel_menu_1 == 4 )
 			{
-				Num_ofMenu = 3;
+				current_Menu = WiFi_Menu;
 				lcd16x2_clrscr();
 			}
 			
-			if(read_touchkey(8) == 1) 
+			if( read_touchkey(Menu_Key) == Touched) 
 			{
-				Num_ofMenu = 0;
-				Exit=1;
+				current_Menu = OutFromMenu;
+				Exit_OfMenu=Exit;
 				lcd16x2_clrscr();
 			}
-			if(read_touchkey(1) == 1)
+			if(read_touchkey(Enter_Key) == Touched)
 			{
-				Num_ofMenu = 0;
-				Num_ofSubMenu = 2;
+				current_Menu = OutFromMenu;
+				current_SubMenu = Light_SubMenu;
 				lcd16x2_clrscr();
 			}
 		}
 		//Sub-Menu of light
-		while(Num_ofSubMenu == 2)
+		while(current_SubMenu == Light_SubMenu)
 		{
 			sprintf(men,"    Light:%d  ",light1);
 			lcd16x2_gotoxy(0,0);
 			lcd16x2_puts(men);
 			light1= Slider(light);
 			light = light1;
-			if(read_touchkey(1) == 1) 
+			if(read_touchkey(Enter_Key) == Touched) 
 			{
-				Num_ofMenu = 2;
-				Num_ofSubMenu = 0;
+				current_Menu = Light_Menu;
+				current_SubMenu = OutFromSubMenu;
 				lcd16x2_clrscr();
 			}
 		}		
 			
 		
 		//wifi menu
-		while(Num_ofMenu == 3)
+		while(current_Menu == WiFi_Menu)
 		{
 			sprintf(men,"Menu\n3-Wifi Setting");
 			lcd16x2_gotoxy(0,0);
@@ -558,32 +592,32 @@ void State_inMenu(void)
 			wheel_menu = wheel_menu_1;
 			if(wheel_menu_1 == 2 )
 			{
-				Num_ofMenu = 2;			
+				current_Menu = Light_Menu;			
 				lcd16x2_clrscr();
 			}
 //			else if(wheel_menu_1 == 4 )
 //			{
-//				Num_ofMenu = 3;
+//				current_Menu = 3;
 //				lcd16x2_clrscr();
 //			}
 			
-			if(read_touchkey(8) == 1) 
+			if( read_touchkey(Menu_Key) == Touched) 
 			{
-				Num_ofMenu = 0;
-				Exit=1;
+				current_Menu = OutFromMenu;
+				Exit_OfMenu=Exit;
 				lcd16x2_clrscr();
 			}
-			if(read_touchkey(1) == 1)
+			if(read_touchkey(Enter_Key) == Touched)
 			{
-				Num_ofMenu = 0;	
-				Num_ofSubMenu = 3;
+				current_Menu = OutFromMenu;	
+				current_SubMenu = WiFiConfig_SubMenu;
 				lcd16x2_clrscr();
 			}
 		}
 		
 		
 		//1- Sum-Menu of wifi : wifi config OK
-		while(Num_ofSubMenu == 3)
+		while(current_SubMenu == WiFiConfig_SubMenu)
 		{
 			sprintf(men,"1-wifi config");
 			lcd16x2_gotoxy(0,0);
@@ -593,77 +627,284 @@ void State_inMenu(void)
 			wheel_submenu = wheel_submenu_1;
 			if(wheel_submenu_1 == 2)
 			{
-				Num_ofSubMenu=4;					
+				current_SubMenu=WiFiIP_SubMenu;					
 				lcd16x2_clrscr();
 			}
 			
-			if(read_touchkey(8) == 1) 
+			if(read_touchkey(Menu_Key) == Touched) 
 			{
-				Num_ofMenu = 3;	
-				Num_ofSubMenu = 0;
+				current_Menu = WiFi_Menu;	
+				current_SubMenu = OutFromSubMenu;
 				lcd16x2_clrscr();
 			}
 			
-			if(read_touchkey(1) == 1)
+			if(read_touchkey(Enter_Key) == Touched)
 			{
 				USART1_PutString(AT_Command);		
-				DelayMs(100);
-				while(p != 1)
+				DelayMs(200);
+				
+				lcd16x2_clrscr();
+				while( t !=1 )
 				{
 					lcd16x2_clrscr();
-					p = lcd16x2_ShowDisplayShiftLeft(buf,L,flag);
-					flag = 0;
-					DelayMs(3000);			
+					t = lcd16x2_ShowDisplayShiftLeft(buf,L,flag);
+					flag = 0;	
+					DelayMs(3000);
 				}
 				for(int r=0 ; r<L ; r++)
 				{ 
 					buf[r]=0;
 				}
+				
 				d=0;
-				p=0;
-				Num_ofMenu = 0;	
-				Num_ofSubMenu = 3;
-				lcd16x2_clrscr();
-		}	
+				t=0;
+				
+				}	
+			}
+		
+			
 			//2- Sum-Menu of wifi : wifi IP
-			while(Num_ofSubMenu == 4)
+			while(current_SubMenu == WiFiIP_SubMenu)
 			{
-				sprintf(men,"2-IP:");
+				sprintf(men,"2-IP and MAC");
 				lcd16x2_gotoxy(0,0);
 				lcd16x2_puts(men);
-				lcd16x2_gotoxy(5,0);
-				lcd16x2_puts(ip);
-
-				
-				
+			
 				wheel_submenu_1 = Wheel(wheel_submenu);
 				wheel_submenu = wheel_submenu_1;
 				if(wheel_submenu_1 == 0)
 				{
-					Num_ofSubMenu=3;					
+					current_SubMenu=WiFiConfig_SubMenu;					
 					lcd16x2_clrscr();
 				}
-//				if(wheel_submenu_1 == 4)
-//				{
-//					Num_ofSubMenu=3;					
-//					lcd16x2_clrscr();
-//				}
-							
-				if(read_touchkey(8) == 1) 
+				if(wheel_submenu_1 == 4)
 				{
-					Num_ofMenu = 3;	
-					Num_ofSubMenu = 0;
+					current_SubMenu=WiFiStatus_SubMenu;					
 					lcd16x2_clrscr();
 				}
+							
+				if(read_touchkey(Menu_Key) == Touched) 
+				{
+					current_Menu = WiFi_Menu;	
+					current_SubMenu = OutFromSubMenu;
+					lcd16x2_clrscr();
+				}
+				
+				if(read_touchkey(Enter_Key) == Touched)
+				{
+					USART1_PutString(GET_IP_Command);		
+					DelayMs(100);
+					
+					lcd16x2_clrscr();
+					while( t !=1 )
+					{
+						lcd16x2_clrscr();
+						t= lcd16x2_ShowDisplayShiftLeft(buf,L,flag);
+						flag = 0;	
+						DelayMs(3000);
+					}
+					lcd16x2_clrscr();
+					for(int r=0 ; r<L ; r++)
+					{ 
+						buf[r]=0;
+					}
+					d=0;
+					t=0;
+				}			
 			}
 			
-//			while(Num_ofSubMenu == 3)
-//			{
-//				
-//			}
+			//3- Sum-Menu of wifi : wifi Status
+			while(current_SubMenu == WiFiStatus_SubMenu)
+			{
+				sprintf(men,"3-WiFi Status");
+				lcd16x2_gotoxy(0,0);
+				lcd16x2_puts(men);
+			
+				wheel_submenu_1 = Wheel(wheel_submenu);
+				wheel_submenu = wheel_submenu_1;
+				if(wheel_submenu_1 == 2)
+				{
+					current_SubMenu=WiFiIP_SubMenu;					
+					lcd16x2_clrscr();
+				}
+				if(wheel_submenu_1 == 6)
+				{
+					current_SubMenu=WiFiHotspot_SubMenu;					
+					lcd16x2_clrscr();
+				}
+							
+				if(read_touchkey(Menu_Key) == Touched) 
+				{
+					current_Menu = WiFi_Menu;	
+					current_SubMenu = OutFromSubMenu;
+					lcd16x2_clrscr();
+				}
+				
+				if(read_touchkey(Enter_Key) == Touched)
+				{
+					USART1_PutString(WIFI_CONNECTED_Command);		
+					DelayMs(100);
+					
+					while(t !=1 )
+					{
+						lcd16x2_clrscr();
+						t = lcd16x2_ShowDisplayShiftLeft(buf,L,flag);
+						flag = 0;	
+						DelayMs(3000);
+					}
+					lcd16x2_clrscr();
+					for(int r=0 ; r<L ; r++)
+					{ 
+						buf[r]=0;
+					}
+					
+					d=0;
+					t=0;
+				}			
+			}
+			
+			//4- Sum-Menu of wifi : WIFI Hotspot
+			while(current_SubMenu == WiFiHotspot_SubMenu )
+			{
+				sprintf(men,"4-WiFi Hotspot");
+				lcd16x2_gotoxy(0,0);
+				lcd16x2_puts(men);
+			
+				wheel_submenu_1 = Wheel(wheel_submenu);
+				wheel_submenu = wheel_submenu_1;
+				if(wheel_submenu_1 == 4)
+				{
+					current_SubMenu=WiFiStatus_SubMenu;					
+					lcd16x2_clrscr();
+				}
+				if(wheel_submenu_1 == 8)
+				{
+					current_SubMenu=WiFiEqualizer_SubMenu;					
+					lcd16x2_clrscr();
+				}
+							
+				if(read_touchkey(Menu_Key) == Touched) 
+				{
+					current_Menu = WiFi_Menu;	
+					current_SubMenu = OutFromSubMenu;
+					lcd16x2_clrscr();
+				}
+				
+				if(read_touchkey(Enter_Key) == Touched)
+				{
+					USART1_PutString(WIFI_HOTSPOT_Command);		
+					DelayMs(100);
+					
+					while( t !=1 )
+					{
+						lcd16x2_clrscr();
+						t = lcd16x2_ShowDisplayShiftLeft(buf,L,flag);
+						flag = 0;	
+						DelayMs(3000);
+					}
+					lcd16x2_clrscr();
+					for(int r=0 ; r<L ; r++)
+					{ 
+						buf[r]=0;
+					}
+					d=0;
+					t=0;
+				}			
+			}
+			
+				
+			//5- Sum-Menu of wifi : ESP reset
+			while(current_SubMenu == WiFiEqualizer_SubMenu)
+			{
+				sprintf(men,"5-Equalizer Off");
+				lcd16x2_gotoxy(0,0);
+				lcd16x2_puts(men);
+			
+				wheel_submenu_1 = Wheel(wheel_submenu);
+				wheel_submenu = wheel_submenu_1;
+				if(wheel_submenu_1 == 6)
+				{
+					current_SubMenu=WiFiHotspot_SubMenu;					
+					lcd16x2_clrscr();
+				}
+				if(wheel_submenu_1 == 10)
+				{
+					current_SubMenu=WiFiReset_SubMenu;					
+					lcd16x2_clrscr();
+				}
+							
+				if(read_touchkey(Menu_Key) == Touched) 
+				{
+					current_Menu = WiFi_Menu;	
+					current_SubMenu = OutFromSubMenu;
+					lcd16x2_clrscr();
+				}
+				
+				if(read_touchkey(Enter_Key) == Touched)
+				{
+					USART1_PutString(Equalizer_Command);		
+					DelayMs(100);
+					
+					while( t !=1 )
+					{
+						lcd16x2_clrscr();
+						t = lcd16x2_ShowDisplayShiftLeft(buf,L,flag);
+						flag = 0;	
+						DelayMs(2000);
+					}
+					lcd16x2_clrscr();
+					for(int r=0 ; r<L ; r++)
+					{ 
+						buf[r]=0;
+					}
+					d=0;
+					t=0;
+				}			
+			}
+					
+		//6- Sub-Menu of wifi : Equalizer Off
+		while(current_SubMenu == WiFiReset_SubMenu)
+		{
+			sprintf(men,"6-Reset ESP");
+			lcd16x2_gotoxy(0,0);
+			lcd16x2_puts(men);
 		
-		
-		
-		}	
-	}
+			wheel_submenu_1 = Wheel(wheel_submenu);
+			wheel_submenu = wheel_submenu_1;
+			if(wheel_submenu_1 == 8)
+			{
+				current_SubMenu=WiFiEqualizer_SubMenu;					
+				lcd16x2_clrscr();
+			}
+						
+			if(read_touchkey(Menu_Key) == Touched) 
+			{
+				current_Menu = WiFi_Menu;	
+				current_SubMenu = OutFromSubMenu;
+				lcd16x2_clrscr();
+			}
+			
+			if(read_touchkey(Enter_Key) == Touched)
+			{
+				USART1_PutString(Reset_Command);		
+				DelayMs(100);
+				
+				while( t !=1 )
+				{
+					lcd16x2_clrscr();
+					t = lcd16x2_ShowDisplayShiftLeft(buf,L,flag);
+					flag = 0;	
+					DelayMs(1000);
+				}
+				lcd16x2_clrscr();
+				for(int r=0 ; r<L ; r++)
+				{ 
+					buf[r]=0;
+				}
+				d=0;
+				t=0;
+			}			
+		}			
+	}	
 }
+

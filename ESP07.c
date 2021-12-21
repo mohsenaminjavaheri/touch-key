@@ -14,15 +14,15 @@
 
 
 #define Reset_Command         "AT+RST\r\n"
-#define AT_Command            "AT\r\n"
-#define Equalizer_Command     "ATE0\r\n"
-#define UART_Command          "AT+UART=115200,8,1,0,0\r\n"
-#define Mode_Command          "AT+CWMODE=2\r\n"
+#define AT_Command             "AT\r\n"
+#define Equalizer_Command    "ATE0\r\n"
+#define UART_Command         "AT+UART=115200,8,1,0,0\r\n"
+#define Mode_Command         "AT+CWMODE=2\r\n"
 #define Server_Command        "AT+CWJAP=\"Houshmand\",\"11005310$$$\"\r\n"                         //+CWMODE = 1
-#define SoftAP_Command        "AT+CWSAP=\"ESP07\",\"123456789\",1,3,4,0\r\n"                       //+CWMODE = 2
-#define IP_Command            "AT+CIPAP=\"192.168.5.1\",\"192.168.5.1\",\"255.255.255.0\"\r\n"
-#define TCP1_Command          "AT+CIPMUX=1\r\n"
-#define TCP2_Command          "AT+CIPSERVER=1,550\r\n"
+#define SoftAP_Command       "AT+CWSAP=\"ESP07\",\"123456789\",1,3,4,0\r\n"                       //+CWMODE = 2
+#define IP_Command              "AT+CIPAP=\"192.168.5.1\",\"192.168.5.1\",\"255.255.255.0\"\r\n"
+#define TCP1_Command         "AT+CIPMUX=1\r\n"
+#define TCP2_Command         "AT+CIPSERVER=1,550\r\n"
 
 
 uint8_t L;
